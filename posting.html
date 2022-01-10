@@ -1,0 +1,443 @@
+<!-- Grace Biemans geb965 -->
+<!DOCTYPE html>
+
+
+<html>
+ <head>
+
+    <title> Dog Adoption </title>
+
+</head>
+
+<body style="background-color: #F5F5F5">
+
+    <fieldset style="width: 650px; height: 650px; background-color: #DED1BD; float: left">
+        <legend>Adoptable Dogs</legend>
+        <textarea style="background-color: #F5F5F5; font-size: 12px" id="dogsList" rows="37" cols="82">   </textarea>
+
+        <br><br>
+
+        <input type="button" style="background-color:#683B2B; color:white; border-color: black" name="answer" value="Staff Information" onclick="showStaffFields(), getRegisteredDogs(), getStaff()" />
+        <input type="button" style="background-color:#683B2B; color:white; border-color: black" name="answer" value="Register/Update/Delete Dogs" onclick="showDogFields(), getRegisteredDogs()" />
+        <input type="button" style="background-color:#683B2B; color:white; border-color: black" name="answer" value="Reports" onclick="showReportField(), getRegisteredDogs(), getReports()" />
+        <input type="button" style="background-color:#683B2B; color:white; border-color: black" name="answer" value="Adoption View Only" onclick="closeStaffFields(), closeDogFields(), closeReportField(), getRegisteredDogs()" />
+    </fieldset>
+
+    <br><br>
+
+    <div id="staffinfo" style="display:none;" class="answer_list">
+    <fieldset style="float:right; border-color: transparent">
+
+        <fieldset style="background-color: #DED1BD; width: 300px; float: right">
+            <label><input id="staffSearch" name="staffSearch" type="text"/></label>
+            <button style="background-color:#683B2B; color:white; border-color: black" onclick="searchStaff()" >Search Name</button>
+            <button style="background-color:#683B2B; color:white; border-color: black" onclick="getStaff()" >Reset</button>
+        </fieldset> <br>
+
+        <fieldset style="background-color: #DED1BD; width: 600px;">
+            <legend>Staff Members</legend>
+            <textarea style="background-color: #F5F5F5; font-size: 12px" id="staffList" rows="20" cols="76"> </textarea>
+        </fieldset>
+
+        <br>
+
+        <fieldset style="background-color: #DED1BD; width: 600px;">
+            <legend>Register Staff</legend>
+            Name: <br>
+            <label><input id="name1" name="name1" type="text" /></label> <br>
+            Position <i>(optional)</i>: <br>
+            <label><input id="position" name="position" type="text" /></label><br>
+            <button style="background-color:#683B2B; color:white; border-color: black" onclick="registerStaff()">Register</button><br>
+        </fieldset>
+
+            <br>
+
+        <fieldset style="background-color: #DED1BD; width: 600px;">
+            <legend>Update Staff Member</legend>
+            Name of Staff Member: <br>
+            <label><input id="name2" name="name2" type="text" /></label> <br><br>
+            Choose field to update: <br>
+            <div>
+                <form>
+                    <input type="radio" id="updateName" name="updateStaff" checked=true> Name
+                    <input type="radio" id="updatePosition" name="updateStaff" > Position
+                </form>
+            </div><br>
+            New Name or Position: <br>
+            <label><input id="update1" name="update1" type="text" /></label> <br>
+            <button style="background-color:#683B2B; color:white; border-color: black" onclick="updateStaff()" >Update</button><br>
+        </fieldset>
+
+            <br>
+
+        <fieldset style="background-color: #DED1BD; width: 600px;">
+            <legend>Delete Staff Member</legend>
+            Name of Staff Member: <br>
+            <label><input id="name3" name="name3" type="text" /></label> <br>
+            <button style="background-color:#683B2B; color:white; border-color: black" onclick="deleteStaff()" >Delete</button><br>
+        </fieldset>
+    </fieldset>
+    </div>
+
+    <div id="doginfo" style="display:none;" class="answer_list">
+    <fieldset style="float: right; border-color: transparent">
+        <fieldset style="background-color: #DED1BD; width: 600px;">
+            <legend>Register Dog</legend>
+            Name: <br>
+            <label><input id="name4" name="name4" type="text" /></label> <br>
+            Breed <i>(optional)</i>: <br>
+            <label><input id="breed" name="breed" type="text" /></label><br>
+            Sex <i>(optional)</i>: <br>
+            <label><input id="sex" name="sex" type="text" /></label> <br>
+            Age <i>(optional)</i>: <br>
+            <label><input id="age" name="age" type="text" /></label><br>
+            <button style="background-color:#683B2B; color:white; border-color: black" onclick="registerDog()" >Register</button><br>
+        </fieldset>
+
+            <br>
+
+        <fieldset style="background-color: #DED1BD; width: 600px;">
+            <legend>Update Dog</legend>
+            Name of Dog: <br>
+            <label><input id="name5" name="name5" type="text" /></label> <br><br>
+            Choose field to update:<br>
+            <div>
+                <form>
+                    <input type="radio" id="updateName2" name="updateDog" checked=true> Name
+                    <input type="radio" id="updateBreed" name="updateDog" > Breed
+                    <input type="radio" id="updateSex" name="updateDog" > Sex
+                    <input type="radio" id="updateAge" name="updateDog" > Age
+                </form>
+            </div><br>
+            New information: <br>
+            <label><input id="update2" name="update2" type="text" /></label> <br>
+            <button style="background-color:#683B2B; color:white; border-color: black" onclick="updateDog()" >Update</button><br>
+        </fieldset>
+
+            <br>
+
+        <fieldset style="background-color: #DED1BD; width: 600px;">
+            <legend>Delete Dog</legend>
+            Name of Dog: <br>
+            <label><input id="name6" name="name6" type="text" /></label> <br>
+            <button style="background-color:#683B2B; color:white; border-color: black" onclick="deleteDog()" >Delete</button><br>
+        </fieldset>
+    </fieldset>
+    </div>
+
+    <div id="reportinfo" style="display:none;" class="answer_list">
+    <fieldset style="float: right; border-color: transparent">
+
+<!--        <fieldset style="background-color: #DED1BD; width: 300px; float: right">-->
+<!--            <label><input id="reportSearch" name="reportSearch" type="text"/></label>-->
+<!--            <button style="background-color:#683B2B; color:white; border-color: black" onclick="searchReports()" >Search Name</button>-->
+<!--            <button style="background-color:#683B2B; color:white; border-color: black" onclick="getReports()" >Reset</button>-->
+<!--        </fieldset> <br>-->
+
+<!--        <fieldset style="background-color: #DED1BD; width: 600px;">-->
+<!--            <legend>Reports</legend>-->
+<!--            <textarea style="background-color: #F5F5F5; font-size: 12px" id="reportsList" rows="20" cols="76"> </textarea>-->
+<!--        </fieldset>-->
+
+<!--        <br>-->
+
+        <fieldset style="background-color: #DED1BD; width: 600px;">
+            <legend>Add Report</legend>
+            Name of Dog: <br>
+            <label><input id="name7" name="name7" type="text" /></label> <br>
+            Report: <br>
+            <label><input id="report" name="report" type="text" /></label> <br>
+            <button style="background-color:#683B2B; color:white; border-color: black" onclick="submitReport()" >Submit Report</button><br>
+        </fieldset>
+    </fieldset>
+    </div>
+
+    <br><br>
+
+
+    <script type = "text/javascript">
+
+    let http = new XMLHttpRequest();
+
+    function showStaffFields() {
+        document.getElementById('staffinfo').style.display = "block";
+        closeDogFields();
+        closeReportField();
+    }
+
+    function closeStaffFields() {
+        document.getElementById('staffinfo').style.display = "none";
+    }
+
+    function showDogFields() {
+        document.getElementById('doginfo').style.display = "block";
+        closeStaffFields();
+        closeReportField();
+    }
+
+    function closeDogFields() {
+        document.getElementById('doginfo').style.display = "none";
+    }
+
+    function showReportField() {
+        document.getElementById('reportinfo').style.display = "block";
+        closeDogFields();
+        closeStaffFields();
+    }
+
+    function closeReportField() {
+        document.getElementById('reportinfo').style.display = "none";
+    }
+
+
+    function registerStaff() {
+        let url = '/registerStaff';
+
+        if (document.getElementById("name1").value === "") {
+            alert("Error: name field cannot be empty");
+        }
+        else {
+            let params = "name=" + document.getElementById("name1").value +
+                "&position=" + document.getElementById("position").value;
+
+            http.open('POST', url, true);
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            http.onreadystatechange = function () {
+                if (http.readyState === 4 && http.status === 200) {
+                    alert("Staff member registered");
+                    getStaff();
+                }
+            };
+            http.send(params);
+        }
+    }
+
+    function getStaff() {
+        let http = new XMLHttpRequest();
+        let url = '/registerStaff';
+        http.open('GET', url, true);
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.onreadystatechange = function() {
+            if(http.readyState === 4 && http.status === 200) {
+                document.getElementById("staffList").value = http.responseText;
+            }
+        };
+
+        http.send();
+    }
+
+    function updateStaff() {
+        let url = '/updateStaff';
+
+        // if they are updating the name to an empty field, throw error
+        if (document.getElementById("updateName").checked && document.getElementById("update1").value === "") {
+            alert("Error: new name field cannot be empty");
+        }
+        else if (document.getElementById("name2").value === "") {
+            alert("Error: name field cannot be empty");
+        }
+        else {
+            var checked;
+            if (document.getElementById("updateName").checked) {
+                checked = "updateName";
+            } else if (document.getElementById("updatePosition").checked) {
+                checked = "updatePosition";
+            }
+
+            let params = "name=" + document.getElementById("name2").value + "&checked=" + checked + "&change=" + document.getElementById("update1").value;
+
+            http.open('POST', url, true);
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            http.onreadystatechange = function () {
+                if (http.readyState === 4 && http.status === 200) {
+                    alert("Staff member updated");
+                    getStaff();
+                }
+            };
+            http.send(params);
+        }
+    }
+
+    function deleteStaff() {
+        let url = '/deleteStaff';
+
+        if (document.getElementById("name3").value === "") {
+            alert("Error: name field cannot be empty");
+        }
+        else {
+            let params = "name=" + document.getElementById("name3").value;
+
+            http.open('POST', url, true);
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            http.onreadystatechange = function () {
+                if (http.readyState === 4 && http.status === 200) {
+                    alert("Staff member deleted");
+                    getStaff();
+                }
+            };
+            http.send(params);
+        }
+    }
+
+    function searchStaff() {
+        let url = '/searchStaff';
+
+        if (document.getElementById("staffSearch").value === "") {
+            alert("Error: search field cannot be empty");
+        }
+        else {
+            let params = "name=" + document.getElementById("staffSearch").value;
+
+            http.open('POST', url, true);
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            http.onreadystatechange = function () {
+                if (http.readyState === 4 && http.status === 200) {
+                    alert("Search made");
+                    getSearchStaff();
+                }
+            };
+            http.send(params);
+        }
+    }
+
+    function getSearchStaff() {
+        // get specific staff and update the staff textview
+        let http = new XMLHttpRequest();
+        let url = '/searchStaff';
+        http.open('GET', url, true);
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.onreadystatechange = function() {
+            if(http.readyState === 4 && http.status === 200) {
+                document.getElementById("staffList").value = http.responseText;
+            }
+        };
+
+        http.send();
+    }
+
+
+    function registerDog() {
+        let url = '/registerDog';
+
+        if (document.getElementById("name4").value === "") {
+            alert("Error: name field cannot be empty");
+        }
+        else {
+            let params =
+                "name=" + document.getElementById("name4").value +
+                "&breed=" + document.getElementById("breed").value +
+                "&sex=" + document.getElementById("sex").value +
+                "&age=" + document.getElementById("age").value;
+
+            http.open('POST', url, true);
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            http.onreadystatechange = function () {
+                if (http.readyState === 4 && http.status === 200) {
+                    alert("Dog registered");
+                    getRegisteredDogs();
+                }
+            };
+            http.send(params);
+        }
+    }
+
+    function getRegisteredDogs() {
+        let http = new XMLHttpRequest();
+        let url = '/registerDog';
+        http.open('GET', url, true);
+        http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        http.onreadystatechange = function() {
+            if(http.readyState === 4 && http.status === 200) {
+                document.getElementById("dogsList").value = http.responseText;
+            }
+        };
+
+        http.send();
+    }
+
+    function updateDog() {
+        let url = '/updateDog';
+
+        if (document.getElementById("updateName2").checked && document.getElementById("update2").value === "") {
+            alert("Error: new name field cannot be empty")
+        }
+        else if (document.getElementById("name5").value === "") {
+            alert("Error: name field cannot be empty")
+        }
+        else {
+            var checked;
+            if (document.getElementById("updateName2").checked) {
+                checked = "name";
+            } else if (document.getElementById("updateBreed").checked) {
+                checked = "breed";
+            } else if (document.getElementById("updateSex").checked) {
+                checked = "sex";
+            } else if (document.getElementById("updateAge").checked) {
+                checked = "age";
+            }
+
+            let params = "name=" + document.getElementById("name5").value + "&checked=" + checked + "&change=" + document.getElementById("update2").value;
+
+            http.open('POST', url, true);
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            http.onreadystatechange = function () {
+                if (http.readyState === 4 && http.status === 200) {
+                    alert("Dog updated");
+                    getRegisteredDogs();
+                }
+            };
+            http.send(params);
+        }
+    }
+
+    function deleteDog() {
+        let url = '/deleteDog';
+
+        if (document.getElementById("name6").value === "") {
+            alert("Error: name field cannot be empty");
+        }
+        else {
+            let params = "name=" + document.getElementById("name6").value;
+
+            http.open('POST', url, true);
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            http.onreadystatechange = function () {
+                if (http.readyState === 4 && http.status === 200) {
+                    alert("Dog deleted");
+                    getRegisteredDogs();
+                }
+            };
+            http.send(params);
+        }
+    }
+
+
+    function submitReport() {
+        let url = '/postReport';
+
+        if (document.getElementById("name7").value === "") {
+            alert("Error: name field cannot be empty");
+        }
+        if (document.getElementById("report").value === "") {
+            alert("Error: report is empty");
+        }
+        else {
+            let params = "name=" + document.getElementById("name7").value + "&report=" + document.getElementById("report").value;
+
+            http.open('POST', url, true);
+            http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            http.onreadystatechange = function () {
+                if (http.readyState === 4 && http.status === 200) {
+                    alert("Report added");
+                    getRegisteredDogs();
+                }
+            };
+            http.send(params);
+        }
+    }
+
+    </script>
+
+    </body>
+    
+    </html>

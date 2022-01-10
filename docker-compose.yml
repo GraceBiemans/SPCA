@@ -1,0 +1,26 @@
+# Grace Biemans geb965
+
+version: '3'
+services:
+
+  server:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mongo
+    container_name: projectServer
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./server:/app/src"
+    command: "npx nodemon src/server.js"
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "mongodb:/data/adoptionDB"
+volumes:
+  mongodb:
